@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Pricing System Beta</title>
+
+</head>
+<body>
+    <h1>Welcome to Pricing System Beta</h1>
+
+
+    <h2>Data Input</h2>
+    <!-- 数据导入 -->
+    <form action="/data-input" method="post">
+        <label for="parameter_1">车型:</label>
+        <select id="parameter_1" name="parameter_1" required>
+            {% for option in car_type %}
+                <option value="{{ option }}" {% if selected_param1 == option %} selected {% endif %}>{{ option }}</option>
+            {% endfor %}
+        </select>
+        <br>
+
+        <label for="parameter_2">险种代码:</label>
+        <select id="parameter_2" name="parameter_2" required>
+            {% for option in insurance_number %}
+                <option value="{{ option }}" {% if selected_param2 == option %} selected {% endif %}>{{ option }}</option>
+            {% endfor %}
+        </select>
+        <br>
+
+        <label for="parameter_3">是否新能源车:</label>
+        <select id="parameter_3" name="parameter_3" required>
+            {% for option in power_type %}
+                <option value="{{ option }}" {% if selected_param3 == option %} selected {% endif %}>{{ option }}</option>
+            {% endfor %}
+        </select>
+        <br>
+        <button type="submit">Run Script</button>
+    </form>
+
+    <h2>Upload a CSV File</h2>
+    <!-- 文件上传表单 -->
+    <form action="/upload-csv" method="post" enctype="multipart/form-data">
+        <input type="file" name="csv_file" accept=".csv" required>
+        <br>
+        <button type="submit">Upload CSV</button>
+    </form>
+
+    <!-- 显示上传的 CSV 文件内容 -->
+    {% if csv_data %}
+        <h2>CSV File Content:</h2>
+        <div>
+            {{ csv_data|safe }}
+        </div>
+    {% endif %}
+
+    <h2>Generated Image:</h2>
+    <!-- 选择多个参数的表单 -->
+    <form action="/show-image-by-parameters" method="post">
+        <button type="submit">Result</button>
+    </form>
+
+
+</body>
+</html>
